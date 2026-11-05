@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,14 +7,16 @@
     <title>CLEB DECOR - Event Decoration</title>
     <style>
         :root {
-            --bg-dark: #0b0f17;
-            --card-bg: #161c28;
-            --accent-gold: #d4af37;
-            --gold-light: #f3e5ab;
-            --text-main: #f0f4f8;
-            --text-muted: #8b9bb4;
-            --border-color: #263043;
+            --bg-dark: #f9f8f3;
+            --card-bg: #ffffff;
+            --accent-gold: #b8860b;
+            --gold-light: #9a7412;
+            --gold-dark: #7a5c0d;
+            --text-main: #6b4e03;
+            --text-muted: #8c7335;
+            --border-color: #e6dfcc;
             --success: #28a745;
+            --shadow-soft: 0 4px 12px rgba(184, 134, 11, 0.08);
         }
 
         * {
@@ -34,13 +37,20 @@
         }
 
         header {
-            background: rgba(11, 15, 23, 0.9);
+            background: rgba(252, 251, 247, 0.95);
             backdrop-filter: blur(10px);
             position: sticky;
             top: 0;
             z-index: 100;
             padding: 12px 16px;
             border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .header-top {
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -53,16 +63,22 @@
         }
 
         .brand-logo {
-            width: 38px;
-            height: 38px;
-            background: linear-gradient(135deg, var(--accent-gold), #8a6d1b);
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
+            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
-            color: #000;
-            font-size: 18px;
+            border: 2px solid var(--accent-gold);
+            background: #000;
+            box-shadow: 0 2px 6px rgba(184, 134, 11, 0.2);
+        }
+
+        .brand-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .brand-info h1 {
@@ -70,28 +86,53 @@
             letter-spacing: 1px;
             color: var(--accent-gold);
             text-transform: uppercase;
+            font-weight: 800;
         }
 
         .brand-info p {
             font-size: 10px;
             color: var(--text-muted);
             letter-spacing: 1.5px;
+            font-weight: 600;
         }
 
-        .queue-btn {
-            background: rgba(212, 175, 55, 0.15);
-            border: 1px solid var(--accent-gold);
-            color: var(--accent-gold);
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
+        /* Embedded Menu Navigation Tabs */
+        .embedded-menu {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+            background: #f3f0e6;
+            padding: 6px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        .menu-tab {
+            background: transparent;
+            border: none;
+            color: var(--gold-dark);
+            padding: 8px 4px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            text-align: center;
             cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .menu-tab.active {
+            background: #ffffff;
+            color: var(--accent-gold);
+            border: 1px solid var(--accent-gold);
+            box-shadow: 0 2px 4px rgba(184, 134, 11, 0.15);
         }
 
         .progress-section {
             padding: 12px 16px;
-            background: #111722;
+            background: #f3f0e6;
             border-bottom: 1px solid var(--border-color);
         }
 
@@ -99,28 +140,38 @@
             display: flex;
             justify-content: space-between;
             font-size: 12px;
-            color: var(--text-muted);
+            color: var(--gold-dark);
+            font-weight: 600;
             margin-bottom: 6px;
         }
 
         .progress-bar-bg {
             width: 100%;
-            height: 4px;
-            background: var(--border-color);
-            border-radius: 2px;
+            height: 5px;
+            background: #e2dac7;
+            border-radius: 3px;
             overflow: hidden;
         }
 
         .progress-bar-fill {
             height: 100%;
             width: 14%;
-            background: linear-gradient(90deg, var(--accent-gold), var(--gold-light));
+            background: linear-gradient(90deg, #d4af37, #b8860b);
             transition: width 0.3s ease;
         }
 
         .content-container {
             padding: 16px;
             flex: 1;
+        }
+
+        .section-view {
+            display: none;
+        }
+
+        .section-view.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in-out;
         }
 
         .step-panel {
@@ -144,10 +195,11 @@
 
         .step-header h2 {
             font-size: 20px;
-            color: var(--gold-light);
+            color: var(--accent-gold);
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 4px;
+            font-weight: 800;
         }
 
         .step-header p {
@@ -161,6 +213,7 @@
             border-radius: 12px;
             padding: 16px;
             margin-bottom: 16px;
+            box-shadow: var(--shadow-soft);
         }
 
         .card-title {
@@ -170,6 +223,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            font-weight: 700;
         }
 
         .options-grid {
@@ -180,22 +234,24 @@
         }
 
         .option-btn {
-            background: #0f141f;
+            background: #fdfcf9;
             border: 1px solid var(--border-color);
             padding: 12px;
             border-radius: 8px;
-            color: var(--text-main);
+            color: var(--gold-dark);
             font-size: 12px;
             text-align: center;
             cursor: pointer;
             transition: all 0.2s;
+            font-weight: 600;
         }
 
         .option-btn.active {
             border-color: var(--accent-gold);
-            background: rgba(212, 175, 55, 0.1);
-            color: var(--gold-light);
+            background: #fffdf5;
+            color: var(--accent-gold);
             font-weight: bold;
+            box-shadow: 0 2px 6px rgba(184, 134, 11, 0.12);
         }
 
         .dimensions-grid {
@@ -206,7 +262,7 @@
         }
 
         .input-group {
-            background: #0f141f;
+            background: #fdfcf9;
             border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 10px;
@@ -219,13 +275,14 @@
             color: var(--text-muted);
             margin-bottom: 4px;
             text-transform: uppercase;
+            font-weight: 700;
         }
 
         .input-group input {
             width: 100%;
             background: transparent;
             border: none;
-            color: var(--gold-light);
+            color: var(--accent-gold);
             font-size: 18px;
             font-weight: bold;
             text-align: center;
@@ -249,24 +306,26 @@
             align-items: center;
             text-align: center;
             transition: all 0.2s;
+            box-shadow: var(--shadow-soft);
         }
 
         .theme-card.selected {
             border-color: var(--accent-gold);
-            box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
-            background: rgba(212, 175, 55, 0.05);
+            box-shadow: 0 0 12px rgba(184, 134, 11, 0.2);
+            background: #fffdf7;
         }
 
         .theme-icon {
             font-size: 32px;
             margin-bottom: 12px;
-            background: #1e2636;
+            background: #f5efe2;
             width: 60px;
             height: 60px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            border: 1px solid var(--border-color);
         }
 
         .item-brand {
@@ -274,12 +333,13 @@
             color: var(--accent-gold);
             text-transform: uppercase;
             margin-bottom: 2px;
+            font-weight: 700;
         }
 
         .item-name {
             font-size: 13px;
             font-weight: bold;
-            color: var(--text-main);
+            color: var(--gold-dark);
             margin-bottom: 4px;
         }
 
@@ -304,29 +364,32 @@
             align-items: center;
             gap: 10px;
             transition: all 0.2s;
+            box-shadow: var(--shadow-soft);
         }
 
         .checkbox-item.selected {
             border-color: var(--accent-gold);
-            background: rgba(212, 175, 55, 0.08);
+            background: #fffdf7;
         }
 
         .item-icon-small {
             width: 32px; 
             height: 32px;
-            background: #1e2636;
+            background: #f5efe2;
             border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 16px;
             flex-shrink: 0;
+            border: 1px solid var(--border-color);
         }
 
         .item-text {
             font-size: 12px;
-            color: var(--text-main);
+            color: var(--gold-dark);
             line-height: 1.2;
+            font-weight: 600;
         }
 
         .form-field {
@@ -338,17 +401,19 @@
             font-size: 11px;
             color: var(--text-muted);
             margin-bottom: 4px;
+            font-weight: 700;
         }
 
         .form-field input, .form-field textarea {
             width: 100%;
-            background: #0f141f;
+            background: #fdfcf9;
             border: 1px solid var(--border-color);
             padding: 10px 12px;
             border-radius: 8px;
-            color: var(--text-main);
+            color: var(--gold-dark);
             font-size: 13px;
             outline: none;
+            font-weight: 600;
         }
 
         .action-buttons {
@@ -360,7 +425,7 @@
 
         .btn-whatsapp {
             background: #25D366;
-            color: #000;
+            color: #ffffff;
             font-weight: bold;
             padding: 12px;
             border-radius: 8px;
@@ -372,10 +437,11 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
+            box-shadow: 0 2px 6px rgba(37, 211, 102, 0.2);
         }
 
         .btn-email {
-            background: rgba(212, 175, 55, 0.15);
+            background: #fffdf5;
             border: 1px solid var(--accent-gold);
             color: var(--accent-gold);
             font-weight: bold;
@@ -391,7 +457,7 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: rgba(17, 23, 34, 0.95);
+            background: rgba(252, 251, 247, 0.95);
             backdrop-filter: blur(10px);
             border-top: 1px solid var(--border-color);
             padding: 12px 16px;
@@ -402,20 +468,22 @@
         }
 
         .nav-btn {
-            background: #1e2636;
+            background: #ffffff;
             border: 1px solid var(--border-color);
-            color: var(--text-main);
+            color: var(--gold-dark);
             padding: 10px 20px;
             border-radius: 8px;
             font-size: 13px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
+            box-shadow: var(--shadow-soft);
         }
 
         .nav-btn.primary {
-            background: linear-gradient(135deg, var(--accent-gold), #b89327);
-            color: #000;
+            background: linear-gradient(135deg, #d4af37, #b8860b);
+            color: #ffffff;
             border: none;
+            box-shadow: 0 2px 6px rgba(184, 134, 11, 0.25);
         }
 
         .nav-btn:disabled {
@@ -423,183 +491,507 @@
             cursor: not-allowed;
         }
 
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.8);
-            z-index: 200;
-            padding: 20px;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
+        /* Information & Review page styles */
+        .info-page-box {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            width: 100%;
-            max-width: 400px;
-            padding: 16px;
-            max-height: 80vh;
-            overflow-y: auto;
+            padding: 20px;
+            margin-top: 10px;
+            box-shadow: var(--shadow-soft);
         }
 
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
+        .info-page-box h3 {
             color: var(--accent-gold);
+            font-size: 18px;
+            margin-bottom: 8px;
+            text-align: center;
+            font-weight: 800;
         }
 
-        .queue-card {
-            background: #0f141f;
-            border: 1px solid var(--border-color);
+        .info-page-box p {
+            color: var(--text-muted);
+            font-size: 13px;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .social-link {
+            display: inline-block;
+            background: #fffdf5;
+            border: 1px solid var(--accent-gold);
+            color: var(--accent-gold);
+            padding: 10px 20px;
             border-radius: 8px;
-            padding: 12px;
-            margin-bottom: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 13px;
+            margin-top: 10px;
         }
 
-        .queue-card-title {
-            color: var(--gold-light);
+        /* File Upload UI Styling */
+        .upload-dropzone {
+            border: 2px dashed var(--accent-gold);
+            background: #fffdf7;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-bottom: 12px;
+            position: relative;
+        }
+
+        .upload-dropzone:hover, .upload-dropzone.dragover {
+            background: #fff9e6;
+            border-color: var(--gold-dark);
+        }
+
+        .upload-icon {
+            font-size: 30px;
+            margin-bottom: 6px;
+        }
+
+        .upload-text {
+            font-size: 12px;
+            color: var(--accent-gold);
+            font-weight: 700;
+        }
+
+        .upload-subtext {
+            font-size: 10px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .preview-card {
+            position: relative;
+            width: 100%;
+            height: 70px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .preview-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .preview-remove {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            background: rgba(0, 0, 0, 0.7);
+            color: #ffffff;
+            border: none;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 11px;
+            line-height: 18px;
+            text-align: center;
+            cursor: pointer;
             font-weight: bold;
+        }
+
+        .review-card-item {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 12px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .review-author {
+            color: var(--accent-gold);
+            font-weight: bold;
+            font-size: 13px;
             margin-bottom: 4px;
+        }
+
+        .review-text {
+            font-size: 12px;
+            color: var(--gold-dark);
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .review-images-row {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+        }
+
+        .review-img-thumb {
+            width: 60px;
+            height: 60px;
+            border-radius: 6px;
+            object-fit: cover;
+            border: 1px solid var(--border-color);
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+
+        .toast-msg {
+            display: none;
+            background: rgba(40, 167, 69, 0.1);
+            border: 1px solid var(--success);
+            color: var(--success);
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            text-align: center;
+            margin-top: 10px;
+            font-weight: 600;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="brand-container">
-            <div class="brand-logo">🪷</div>
-            <div class="brand-info">
-                <h1>CLEB DECOR</h1>
-                <p>TRI-CITY ONLY</p>
+        <div class="header-top">
+            <div class="brand-container">
+                <div class="brand-logo">
+                    <img src="1000148602.jpg" alt="CLEB DECOR Logo" onerror="this.onerror=null; this.src='https://placehold.co/100x100/d4af37/ffffff?text=🪷';">
+                </div>
+                <div class="brand-info">
+                    <h1>CLEB DECOR</h1>
+                    <p>TRI-CITY ONLY</p>
+                </div>
             </div>
         </div>
-        <button class="queue-btn" onclick="toggleQueue()">≡ Queue</button>
+        <!-- Embedded Options Menu -->
+        <div class="embedded-menu">
+            <button class="menu-tab active" id="menuHome" onclick="switchSection('home')">1. Home</button>
+            <button class="menu-tab" id="menuLuke" onclick="switchSection('luke')">2. LUKE LUX</button>
+            <button class="menu-tab" id="menuReview" onclick="switchSection('review')">3. Review</button>
+            <button class="menu-tab" id="menuAbout" onclick="switchSection('about')">4. About</button>
+        </div>
     </header>
 
-    <div class="progress-section">
-        <div class="step-info">
-            <span id="stepLabel">Step 1: Celebration Type</span>
-            <span id="stepNumber">1 / 7</span>
+    <!-- HOME SECTION (Booking Flow) -->
+    <div id="sectionHome" class="section-view active">
+        <div class="progress-section">
+            <div class="step-info">
+                <span id="stepLabel">Step 1: Celebration Type</span>
+                <span id="stepNumber">1 / 7</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="progressFill"></div>
+            </div>
         </div>
-        <div class="progress-bar-bg">
-            <div class="progress-bar-fill" id="progressFill"></div>
+
+        <div class="content-container" style="padding-top: 0;">
+            <!-- STEP 1 -->
+            <div class="step-panel active" id="step1">
+                <div class="step-header" style="margin-top: 16px;">
+                    <h2>Celebration Type</h2>
+                    <p>What are we celebrating today?</p>
+                </div>
+                <div class="options-grid">
+                    <div class="option-btn active" onclick="selectOption(this, 'celebrationType', 'Birthday')">🎂 Birthday Party</div>
+                    <div class="option-btn" onclick="selectOption(this, 'celebrationType', 'Anniversary')">💍 Anniversary</div>
+                    <div class="option-btn" onclick="selectOption(this, 'celebrationType', 'BabyShower')">🍼 Baby Shower</div>
+                    <div class="option-btn" onclick="selectOption(this, 'celebrationType', 'Other')">🎉 Other Event</div>
+                </div>
+            </div>
+
+            <!-- STEP 2 -->
+            <div class="step-panel" id="step2">
+                <div class="step-header">
+                    <h2>Venue Details</h2>
+                    <p>Where & how big is the space?</p>
+                </div>
+                <div class="card-box">
+                    <div class="card-title">Venue Setting</div>
+                    <div class="options-grid" style="grid-template-columns: 1fr 1fr;">
+                        <div class="option-btn active" id="venueIndoor" onclick="setVenue('Indoor')">🏠 Indoor</div>
+                        <div class="option-btn" id="venueOutdoor" onclick="setVenue('Outdoor')">🌲 Outdoor</div>
+                    </div>
+                    <div class="card-title" style="margin-top:16px;">Dimensions (in feet)</div>
+                    <div class="dimensions-grid">
+                        <div class="input-group"><label>Length</label><input type="number" id="dimL" value="25" min="1"></div>
+                        <div class="input-group"><label>Width</label><input type="number" id="dimW" value="20" min="1"></div>
+                        <div class="input-group"><label>Height</label><input type="number" id="dimH" value="12" min="1"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STEP 3 -->
+            <div class="step-panel" id="step3">
+                <div class="step-header">
+                    <h2>Theme Selection</h2>
+                    <p>Choose the perfect styling theme</p>
+                </div>
+                <div class="theme-grid" id="themeList"></div>
+            </div>
+
+            <!-- STEP 4 -->
+            <div class="step-panel" id="step4">
+                <div class="step-header">
+                    <h2>Entertainment & Props</h2>
+                    <p>Add special effects and fun elements</p>
+                </div>
+                <div class="checkbox-grid" id="propsGrid"></div>
+            </div>
+
+            <!-- STEP 5 -->
+            <div class="step-panel" id="step5">
+                <div class="step-header">
+                    <h2>Dining & Cake</h2>
+                    <p>Select supplies and cake options</p>
+                </div>
+                <div class="checkbox-grid" id="diningGrid"></div>
+            </div>
+
+            <!-- STEP 6 -->
+            <div class="step-panel" id="step6">
+                <div class="step-header">
+                    <h2>Lighting & Toys</h2>
+                    <p>Brighten up the party atmosphere</p>
+                </div>
+                <div class="checkbox-grid" id="lightingGrid"></div>
+            </div>
+
+            <!-- STEP 7 -->
+            <div class="step-panel" id="step7">
+                <div class="step-header">
+                    <h2>Confirm Booking</h2>
+                    <p>Enter your details to finalize your request</p>
+                </div>
+                <div class="card-box">
+                    <div class="form-field"><label>Full Name</label><input type="text" id="custName" placeholder="John Doe"></div>
+                    <div class="form-field"><label>Phone Number</label><input type="tel" id="custPhone" placeholder="9934936488"></div>
+                    <div class="form-field"><label>Event Date</label><input type="date" id="custDate"></div>
+                    <div class="form-field"><label>Instructions</label><textarea id="custNotes" rows="2" placeholder="Special requests..."></textarea></div>
+                    <div class="action-buttons">
+                        <button class="btn-whatsapp" onclick="submitBooking('whatsapp')">💬 Confirm via WhatsApp</button>
+                        <button class="btn-email" onclick="submitBooking('email')">✉️ Confirm via Email</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom-nav" id="homeBottomNav">
+            <button class="nav-btn" id="backBtn" onclick="prevStep()" disabled>‹ Back</button>
+            <button class="nav-btn primary" id="nextBtn" onclick="nextStep()">Next ›</button>
         </div>
     </div>
 
-    <div class="content-container">
-
-        <!-- STEP 1 -->
-        <div class="step-panel active" id="step1">
-            <div class="step-header">
-                <h2>Celebration Type</h2>
-                <p>What are we celebrating today?</p>
+    <!-- LUKE LUX SECTION -->
+    <div id="sectionLuke" class="section-view">
+        <div class="progress-section">
+            <div class="step-info">
+                <span id="lukeStepLabel">Step 1: Lux Celebration</span>
+                <span id="lukeStepNumber">1 / 8</span>
             </div>
-            <div class="options-grid">
-                <div class="option-btn active" onclick="selectOption(this, 'celebrationType', 'Birthday')">🎂 Birthday Party</div>
-                <div class="option-btn" onclick="selectOption(this, 'celebrationType', 'Anniversary')">💍 Anniversary</div>
-                <div class="option-btn" onclick="selectOption(this, 'celebrationType', 'BabyShower')">🍼 Baby Shower</div>
-                <div class="option-btn" onclick="selectOption(this, 'celebrationType', 'Other')">🎉 Other Event</div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="lukeProgressFill"></div>
             </div>
         </div>
 
-        <!-- STEP 2 -->
-        <div class="step-panel" id="step2">
-            <div class="step-header">
-                <h2>Venue Details</h2>
-                <p>Where & how big is the space?</p>
-            </div>
-            <div class="card-box">
-                <div class="card-title">Venue Setting</div>
-                <div class="options-grid" style="grid-template-columns: 1fr 1fr;">
-                    <div class="option-btn active" id="venueIndoor" onclick="setVenue('Indoor')">🏠 Indoor</div>
-                    <div class="option-btn" id="venueOutdoor" onclick="setVenue('Outdoor')">🌲 Outdoor</div>
+        <div class="content-container" style="padding-top: 0;">
+            <!-- LUKE STEP 1: Celebration Type -->
+            <div class="step-panel active" id="lukeStep1">
+                <div class="step-header" style="margin-top: 16px;">
+                    <h2>LUKE LUX Celebration</h2>
+                    <p>Select your premium event type</p>
                 </div>
-                <div class="card-title" style="margin-top:16px;">Dimensions (in feet)</div>
-                <div class="dimensions-grid">
-                    <div class="input-group"><label>Length</label><input type="number" id="dimL" value="25" min="1"></div>
-                    <div class="input-group"><label>Width</label><input type="number" id="dimW" value="20" min="1"></div>
-                    <div class="input-group"><label>Height</label><input type="number" id="dimH" value="12" min="1"></div>
+                <div class="options-grid">
+                    <div class="option-btn active" onclick="selectLukeOption(this, 'celebrationType', 'Luxury Birthday')">👑 Lux Birthday</div>
+                    <div class="option-btn" onclick="selectLukeOption(this, 'celebrationType', 'Grand Wedding / Gala')">🏰 Grand Gala</div>
+                    <div class="option-btn" onclick="selectLukeOption(this, 'celebrationType', 'VIP Baby Shower')">🍼 VIP Baby Shower</div>
+                    <div class="option-btn" onclick="selectLukeOption(this, 'celebrationType', 'Private Lounge Party')">✨ Private Lounge</div>
                 </div>
             </div>
-        </div>
 
-        <!-- STEP 3 -->
-        <div class="step-panel" id="step3">
-            <div class="step-header">
-                <h2>Theme Selection</h2>
-                <p>Choose the perfect styling theme</p>
+            <!-- LUKE STEP 2: Venue & Seating (Tables & Chairs) -->
+            <div class="step-panel" id="lukeStep2">
+                <div class="step-header">
+                    <h2>Venue & Seating Setup</h2>
+                    <p>Choose VIP tables & chair arrangements</p>
+                </div>
+                <div class="card-box">
+                    <div class="card-title">Venue Setting</div>
+                    <div class="options-grid" style="grid-template-columns: 1fr 1fr;">
+                        <div class="option-btn active" id="lukeVenueIndoor" onclick="setLukeVenue('Indoor')">🏠 Luxury Indoor</div>
+                        <div class="option-btn" id="lukeVenueOutdoor" onclick="setLukeVenue('Outdoor')">🌿 Open Air Garden</div>
+                    </div>
+                    <div class="card-title" style="margin-top:16px;">Dimensions (in feet)</div>
+                    <div class="dimensions-grid">
+                        <div class="input-group"><label>Length</label><input type="number" id="lukeDimL" value="35" min="1"></div>
+                        <div class="input-group"><label>Width</label><input type="number" id="lukeDimW" value="30" min="1"></div>
+                        <div class="input-group"><label>Height</label><input type="number" id="lukeDimH" value="14" min="1"></div>
+                    </div>
+                </div>
+                <div class="card-title" style="padding: 0 4px; margin-bottom: 8px;">VIP Seating & Furniture</div>
+                <div class="checkbox-grid" id="lukeFurnitureGrid"></div>
             </div>
-            <div class="theme-grid" id="themeList"></div>
-        </div>
 
-        <!-- STEP 4 -->
-        <div class="step-panel" id="step4">
-            <div class="step-header">
-                <h2>Entertainment & Props</h2>
-                <p>Add special effects and fun elements</p>
+            <!-- LUKE STEP 3: Theme Selection -->
+            <div class="step-panel" id="lukeStep3">
+                <div class="step-header">
+                    <h2>Signature Lux Themes</h2>
+                    <p>Exclusive high-end styling packages</p>
+                </div>
+                <div class="theme-grid" id="lukeThemeList"></div>
             </div>
-            <div class="checkbox-grid" id="propsGrid"></div>
-        </div>
 
-        <!-- STEP 5 -->
-        <div class="step-panel" id="step5">
-            <div class="step-header">
-                <h2>Dining & Cake</h2>
-                <p>Select supplies and cake options</p>
+            <!-- LUKE STEP 4: Party Pops & Special FX -->
+            <div class="step-panel" id="lukeStep4">
+                <div class="step-header">
+                    <h2>Party Pops & Special FX</h2>
+                    <p>Create unforgettable high-energy moments</p>
+                </div>
+                <div class="checkbox-grid" id="lukePopsGrid"></div>
             </div>
-            <div class="checkbox-grid" id="diningGrid"></div>
-        </div>
 
-        <!-- STEP 6 -->
-        <div class="step-panel" id="step6">
-            <div class="step-header">
-                <h2>Lighting & Toys</h2>
-                <p>Brighten up the party atmosphere</p>
+            <!-- LUKE STEP 5: Cakes, Dining & Meal Preference -->
+            <div class="step-panel" id="lukeStep5">
+                <div class="step-header">
+                    <h2>Dining & Catering Selection</h2>
+                    <p>Select luxury dining elements & food preference</p>
+                </div>
+                <div class="card-box">
+                    <div class="card-title">Dietary / Meal Preference</div>
+                    <div class="options-grid" style="grid-template-columns: repeat(3, 1fr);">
+                        <div class="option-btn active" onclick="selectLukeMeal(this, 'Pure Veg')">🥗 Pure Veg</div>
+                        <div class="option-btn" onclick="selectLukeMeal(this, 'Non-Veg')">🍗 Non-Veg</div>
+                        <div class="option-btn" onclick="selectLukeMeal(this, 'Jain Special')">🥬 Jain Special</div>
+                    </div>
+                </div>
+                <div class="checkbox-grid" id="lukeDiningGrid"></div>
             </div>
-            <div class="checkbox-grid" id="lightingGrid"></div>
-        </div>
 
-        <!-- STEP 7 -->
-        <div class="step-panel" id="step7">
-            <div class="step-header">
-                <h2>Confirm Booking</h2>
-                <p>Enter your details to finalize your request</p>
+            <!-- LUKE STEP 6: Chocolates & Sweet Treats -->
+            <div class="step-panel" id="lukeStep6">
+                <div class="step-header">
+                    <h2>Chocolates & Candy Station</h2>
+                    <p>Indulgent sweet fountains & gourmet treats</p>
+                </div>
+                <div class="checkbox-grid" id="lukeSweetsGrid"></div>
             </div>
-            <div class="card-box">
-                <div class="form-field"><label>Full Name</label><input type="text" id="custName" placeholder="John Doe"></div>
-                <div class="form-field"><label>Phone Number</label><input type="tel" id="custPhone" placeholder="9934936488"></div>
-                <div class="form-field"><label>Event Date</label><input type="date" id="custDate"></div>
-                <div class="form-field"><label>Instructions</label><textarea id="custNotes" rows="2" placeholder="Special requests..."></textarea></div>
-                <div class="action-buttons">
-                    <button class="btn-whatsapp" onclick="submitBooking('whatsapp')">💬 Confirm via WhatsApp</button>
-                    <button class="btn-email" onclick="submitBooking('email')">✉️ Confirm via Email</button>
+
+            <!-- LUKE STEP 7: Ambient Fragrance & Lighting -->
+            <div class="step-panel" id="lukeStep7">
+                <div class="step-header">
+                    <h2>Ambient Fragrance & Lighting</h2>
+                    <p>Set the mood with aromatherapy & custom neon</p>
+                </div>
+                <div class="card-box">
+                    <div class="card-title">Aromatherapy & Ambient Scent</div>
+                    <div class="options-grid" style="grid-template-columns: 1fr 1fr;">
+                        <div class="option-btn active" onclick="selectLukeFragrance(this, 'Royal Jasmine Mist')">🌸 Royal Jasmine</div>
+                        <div class="option-btn" onclick="selectLukeFragrance(this, 'Lavender Chill')">🪻 Lavender Chill</div>
+                        <div class="option-btn" onclick="selectLukeFragrance(this, 'Rose Ambient Scent')">🌹 Rose Ambient</div>
+                        <div class="option-btn" onclick="selectLukeFragrance(this, 'Vanilla Gold Scent')">🍦 Vanilla Gold</div>
+                    </div>
+                </div>
+                <div class="checkbox-grid" id="lukeLightingGrid"></div>
+            </div>
+
+            <!-- LUKE STEP 8: Confirm Booking -->
+            <div class="step-panel" id="lukeStep8">
+                <div class="step-header">
+                    <h2>Confirm LUKE LUX Booking</h2>
+                    <p>Provide contact details to receive custom quote</p>
+                </div>
+                <div class="card-box">
+                    <div class="form-field"><label>Full Name *</label><input type="text" id="lukeCustName" placeholder="John Doe"></div>
+                    <div class="form-field"><label>Phone Number *</label><input type="tel" id="lukeCustPhone" placeholder="9508610614"></div>
+                    <div class="form-field"><label>Event Date *</label><input type="date" id="lukeCustDate"></div>
+                    <div class="form-field"><label>Special Instructions</label><textarea id="lukeCustNotes" rows="2" placeholder="Custom preferences..."></textarea></div>
+                    <div class="action-buttons">
+                        <button class="btn-whatsapp" onclick="submitLukeBooking('whatsapp')">💬 Book LUKE LUX via WhatsApp</button>
+                        <button class="btn-email" onclick="submitLukeBooking('email')">✉️ Book LUKE LUX via Email</button>
+                    </div>
                 </div>
             </div>
         </div>
 
+        <div class="bottom-nav" id="lukeBottomNav">
+            <button class="nav-btn" id="lukeBackBtn" onclick="prevLukeStep()" disabled>‹ Back</button>
+            <button class="nav-btn primary" id="lukeNextBtn" onclick="nextLukeStep()">Next ›</button>
+        </div>
     </div>
 
-    <div class="bottom-nav">
-        <button class="nav-btn" id="backBtn" onclick="prevStep()" disabled>‹ Back</button>
-        <button class="nav-btn primary" id="nextBtn" onclick="nextStep()">Next ›</button>
+    <!-- REVIEW SECTION -->
+    <div id="sectionReview" class="section-view">
+        <div class="content-container">
+            <!-- Customer Verification Box -->
+            <div class="info-page-box" id="reviewVerificationBox">
+                <h3>Verified Customer Review</h3>
+                <p style="text-align: center;">To ensure authentic feedback, only customers who have booked our services can post reviews and photos.</p>
+                <div class="form-field">
+                    <label>Enter Registered Phone Number *</label>
+                    <input type="tel" id="verifyPhone" placeholder="e.g. 9934936488">
+                </div>
+                <button class="nav-btn primary" style="width:100%; margin-top:6px;" onclick="verifyCustomer()">Verify & Continue</button>
+                <div class="toast-msg" id="verifyMsg" style="background: rgba(220, 53, 69, 0.2); border-color: #ff5555; color: #ff8888;"></div>
+            </div>
+
+            <!-- Review Form (Hidden until verified) -->
+            <div class="info-page-box" id="reviewFormBox" style="display: none;">
+                <h3>Submit Your Experience</h3>
+                <div style="background: rgba(40, 167, 69, 0.15); border: 1px solid var(--success); color: #6cf08a; padding: 8px 12px; border-radius: 6px; font-size: 11px; margin-bottom: 14px; text-align: center;">
+                    ✓ Verified Customer: <span id="verifiedCustName" style="font-weight: bold;"></span>
+                </div>
+                
+                <div class="form-field">
+                    <label>Review / Feedback *</label>
+                    <textarea id="revText" rows="3" placeholder="Share details about your event setup and experience..."></textarea>
+                </div>
+
+                <!-- Image Upload Field -->
+                <div class="form-field">
+                    <label>Upload Get-Together Photos (Optional)</label>
+                    <div class="upload-dropzone" id="dropzone" onclick="triggerFileInput()">
+                        <div class="upload-icon">📷</div>
+                        <div class="upload-text">Tap or Drop Photos Here</div>
+                        <div class="upload-subtext">JPG, PNG, WEBP allowed</div>
+                        <input type="file" id="imageInput" accept="image/*" multiple style="display: none;" onchange="handleFileSelect(event)">
+                    </div>
+                    <div class="preview-grid" id="previewGrid"></div>
+                </div>
+
+                <button class="nav-btn primary" style="width:100%; margin-top:10px;" onclick="submitReview()">Submit Review</button>
+                <div class="toast-msg" id="reviewToast">✨ Thank you! Your review and photos have been submitted successfully.</div>
+            </div>
+
+            <!-- Submitted Reviews Section -->
+            <div style="margin-top: 20px;">
+                <h4 style="color: var(--accent-gold); font-size: 14px; margin-bottom: 12px; text-transform: uppercase;">Recent Customer Highlights</h4>
+                <div id="reviewsContainer"></div>
+            </div>
+        </div>
     </div>
 
-    <div class="modal" id="queueModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Submitted Queries</h3>
-                <span style="cursor:pointer" onclick="toggleQueue()">✕</span>
+    <!-- ABOUT COMPANY SECTION -->
+    <div id="sectionAbout" class="section-view">
+        <div class="content-container">
+            <div class="info-page-box" style="text-align: center;">
+                <h3>About Company</h3>
+                <p><strong>CLEB DECOR</strong> offers premium event decoration and styling exclusively in the Tri-City area.</p>
+                <p style="margin-top: 10px;">
+                    📞 <strong>Phone:</strong> +91 9934936488<br>
+                    ✉️ <strong>Email:</strong> aman.official.9934@gmail.com
+                </p>
+                <div style="margin-top: 15px;">
+                    <p style="font-size: 11px; margin-bottom: 4px;">Connect with Owner on Instagram:</p>
+                    <a href="https://www.instagram.com/iamanrajputtt?dlrf=aDJhb3owZWpzcmR1" target="_blank" class="social-link">📸 Instagram Profile</a>
+                </div>
             </div>
-            <div id="queueList" style="font-size: 12px; color: var(--text-muted);">No requests submitted yet.</div>
         </div>
     </div>
 
@@ -614,8 +1006,31 @@
             selectedLighting: []
         };
 
+        /* LUKE LUX Form State */
+        const lukeFormData = {
+            celebrationType: 'Luxury Birthday',
+            venueSetting: 'Indoor',
+            furniture: [],
+            selectedTheme: null,
+            popsFX: [],
+            mealPref: 'Pure Veg',
+            selectedDining: [],
+            sweets: [],
+            fragrance: 'Royal Jasmine Mist',
+            selectedLighting: []
+        };
+
         let currentStep = 1;
         const totalSteps = 7;
+
+        let currentLukeStep = 1;
+        const totalLukeSteps = 8;
+
+        let uploadedImages = []; // Stores Base64 data of uploaded photos
+        let verifiedCustomerData = null;
+
+        // Pre-verified phone numbers list
+        const preVerifiedNumbers = ['9508610614', '9934936488'];
 
         const themesData = [
             { id: 1, brand: "PARTYJOY", name: "Butterfly Theme Kit", icon: "🦋", tag: "Purple & Silver Foil" },
@@ -625,6 +1040,49 @@
             { id: 5, brand: "PopTheParty", name: "Bride to Be Combo", icon: "💍", tag: "Rose Gold Setup" },
             { id: 6, brand: "PARTY JOY", name: "Silver & Blue Kit", icon: "🎈", tag: "Silver Theme" },
             { id: 7, brand: "PopTheParty", name: "Pink Birthday Kit", icon: "🎉", tag: "Pastel Pink" }
+        ];
+
+        /* LUKE LUX Luxury Datasets */
+        const lukeFurnitureData = [
+            { id: "fur1", name: "Plush Velvet Lounge Sofas", icon: "🛋️" },
+            { id: "fur2", name: "Golden VIP Banquet Chairs", icon: "🪑" },
+            { id: "fur3", name: "Mirror Glass Dining Tables", icon: "🍽️" },
+            { id: "fur4", name: "Cocktail High-Top Tables", icon: "🍸" }
+        ];
+
+        const lukeThemesData = [
+            { id: 101, brand: "LUKE LUX", name: "Royal Gold Velvet Arch", icon: "👑", tag: "24K Gold Accent Setup" },
+            { id: 102, brand: "LUKE LUX", name: "Crystal Chandelier Canopy", icon: "💎", tag: "Illuminated Glass Dome" },
+            { id: 103, brand: "LUKE LUX", name: "Emerald Forest Lounge", icon: "🌿", tag: "Exotic Flora & Gold" },
+            { id: 104, brand: "LUKE LUX", name: "Midnight Stardust Mirror", icon: "🌌", tag: "Interactive Fiber Optics" }
+        ];
+
+        const lukePopsData = [
+            { id: "pop1", name: "Gold Confetti Cannons", icon: "🎉" },
+            { id: "pop2", name: "Cold Pyro Sparkler Jets", icon: "🎆" },
+            { id: "pop3", name: "CO2 Jet Fog Blasters", icon: "💨" },
+            { id: "pop4", name: "Champagne Bubble Shower", icon: "🍾" }
+        ];
+
+        const lukeDiningData = [
+            { id: "ldin1", name: "Multi-Tier Designer Cake", icon: "🎂" },
+            { id: "ldin2", name: "Gold Plated Cutlery Set", icon: "🍴" },
+            { id: "ldin3", name: "Mocktail Bar counter", icon: "🍹" },
+            { id: "ldin4", name: "Luxury Dessert Carousel", icon: "🧁" }
+        ];
+
+        const lukeSweetsData = [
+            { id: "swt1", name: "Belgian Chocolate Fountain", icon: "🍫" },
+            { id: "swt2", name: "Gourmet Candy & Marshmallow Bar", icon: "🍬" },
+            { id: "swt3", name: "Handcrafted Truffles Tower", icon: "🍩" },
+            { id: "swt4", name: "Cotton Candy & Popcorn Cart", icon: "🍿" }
+        ];
+
+        const lukeLightingData = [
+            { id: "llit1", name: "Custom Name Neon Signboard", icon: "💡" },
+            { id: "llit2", name: "Warm Ambient Uplighting", icon: "✨" },
+            { id: "llit3", name: "3D Hologram Projection", icon: "🌌" },
+            { id: "llit4", name: "Intelligent Moving Head Beams", icon: "🔦" }
         ];
 
         const propsData = [
@@ -658,13 +1116,311 @@
             "Confirm Booking"
         ];
 
+        const lukeStepTitles = [
+            "Lux Celebration",
+            "Venue & VIP Seating",
+            "Signature Lux Themes",
+            "Party Pops & Special FX",
+            "Dining & Catering",
+            "Chocolates & Candies",
+            "Fragrance & Lighting",
+            "Confirm LUKE LUX"
+        ];
+
         function init() {
             renderThemes();
             renderCheckboxGrid("propsGrid", propsData, formData.selectedProps);
             renderCheckboxGrid("diningGrid", diningData, formData.selectedDining);
             renderCheckboxGrid("lightingGrid", lightingData, formData.selectedLighting);
+
+            /* Initialize LUKE LUX grids */
+            renderLukeFurnitureGrid();
+            renderLukeThemes();
+            renderLukeCheckboxGrid("lukePopsGrid", lukePopsData, lukeFormData.popsFX);
+            renderLukeCheckboxGrid("lukeDiningGrid", lukeDiningData, lukeFormData.selectedDining);
+            renderLukeCheckboxGrid("lukeSweetsGrid", lukeSweetsData, lukeFormData.sweets);
+            renderLukeCheckboxGrid("lukeLightingGrid", lukeLightingData, lukeFormData.selectedLighting);
+
             updateStepView();
-            renderQueue();
+            updateLukeStepView();
+            initDragAndDrop();
+            renderReviews();
+        }
+
+        /* LUKE LUX Helpers */
+        function selectLukeOption(element, field, value) {
+            const siblings = element.parentNode.querySelectorAll('.option-btn');
+            siblings.forEach(el => el.classList.remove('active'));
+            element.classList.add('active');
+            if (field === 'celebrationType') {
+                lukeFormData.celebrationType = value;
+            }
+        }
+
+        function setLukeVenue(setting) {
+            lukeFormData.venueSetting = setting;
+            const indoorEl = document.getElementById('lukeVenueIndoor');
+            const outdoorEl = document.getElementById('lukeVenueOutdoor');
+            if (indoorEl) indoorEl.classList.toggle('active', setting === 'Indoor');
+            if (outdoorEl) outdoorEl.classList.toggle('active', setting === 'Outdoor');
+        }
+
+        function selectLukeMeal(element, meal) {
+            const siblings = element.parentNode.querySelectorAll('.option-btn');
+            siblings.forEach(el => el.classList.remove('active'));
+            element.classList.add('active');
+            lukeFormData.mealPref = meal;
+        }
+
+        function selectLukeFragrance(element, scent) {
+            const siblings = element.parentNode.querySelectorAll('.option-btn');
+            siblings.forEach(el => el.classList.remove('active'));
+            element.classList.add('active');
+            lukeFormData.fragrance = scent;
+        }
+
+        function renderLukeFurnitureGrid() {
+            const container = document.getElementById('lukeFurnitureGrid');
+            if (!container) return;
+            container.innerHTML = lukeFurnitureData.map(item => {
+                const isSelected = lukeFormData.furniture.includes(item.name);
+                return `
+                    <div class="checkbox-item ${isSelected ? 'selected' : ''}" onclick="toggleLukeFurniture('${item.name}', this)">
+                        <div class="item-icon-small">${item.icon}</div>
+                        <div class="item-text">${item.name}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function toggleLukeFurniture(value, element) {
+            const idx = lukeFormData.furniture.indexOf(value);
+            if (idx > -1) {
+                lukeFormData.furniture.splice(idx, 1);
+                element.classList.remove('selected');
+            } else {
+                lukeFormData.furniture.push(value);
+                element.classList.add('selected');
+            }
+        }
+
+        function renderLukeThemes() {
+            const container = document.getElementById('lukeThemeList');
+            if (!container) return;
+            container.innerHTML = lukeThemesData.map(theme => `
+                <div class="theme-card ${lukeFormData.selectedTheme === theme.name ? 'selected' : ''}" onclick="selectLukeTheme('${theme.name}')">
+                    <div class="theme-icon">${theme.icon}</div>
+                    <div class="item-brand">${theme.brand}</div>
+                    <div class="item-name">${theme.name}</div>
+                    <div class="item-tag">${theme.tag}</div>
+                </div>
+            `).join('');
+        }
+
+        function selectLukeTheme(themeName) {
+            lukeFormData.selectedTheme = themeName;
+            renderLukeThemes();
+        }
+
+        function renderLukeCheckboxGrid(containerId, items, stateArray) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            container.innerHTML = items.map(item => {
+                const isSelected = stateArray.includes(item.name);
+                return `
+                    <div class="checkbox-item ${isSelected ? 'selected' : ''}" onclick="toggleLukeSelection('${containerId}', '${item.name}', this)">
+                        <div class="item-icon-small">${item.icon}</div>
+                        <div class="item-text">${item.name}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function toggleLukeSelection(containerId, value, element) {
+            let targetArr = lukeFormData.popsFX;
+            if (containerId === 'lukeDiningGrid') targetArr = lukeFormData.selectedDining;
+            else if (containerId === 'lukeSweetsGrid') targetArr = lukeFormData.sweets;
+            else if (containerId === 'lukeLightingGrid') targetArr = lukeFormData.selectedLighting;
+
+            const index = targetArr.indexOf(value);
+            if (index > -1) {
+                targetArr.splice(index, 1);
+                element.classList.remove('selected');
+            } else {
+                targetArr.push(value);
+                element.classList.add('selected');
+            }
+        }
+
+        function updateLukeStepView() {
+            for (let i = 1; i <= totalLukeSteps; i++) {
+                const panel = document.getElementById(`lukeStep${i}`);
+                if (panel) panel.classList.toggle('active', i === currentLukeStep);
+            }
+
+            const stepLabel = document.getElementById('lukeStepLabel');
+            const stepNumber = document.getElementById('lukeStepNumber');
+            const progressFill = document.getElementById('lukeProgressFill');
+            const backBtn = document.getElementById('lukeBackBtn');
+            const nextBtn = document.getElementById('lukeNextBtn');
+
+            if (stepLabel) stepLabel.innerText = `Step ${currentLukeStep}: ${lukeStepTitles[currentLukeStep - 1]}`;
+            if (stepNumber) stepNumber.innerText = `${currentLukeStep} / ${totalLukeSteps}`;
+            if (progressFill) progressFill.style.width = `${(currentLukeStep / totalLukeSteps) * 100}%`;
+
+            if (backBtn) backBtn.disabled = currentLukeStep === 1;
+            if (nextBtn) {
+                if (currentLukeStep === totalLukeSteps) {
+                    nextBtn.style.display = 'none';
+                } else {
+                    nextBtn.style.display = 'block';
+                    nextBtn.innerText = 'Next ›';
+                }
+            }
+        }
+
+        function nextLukeStep() {
+            if (currentLukeStep < totalLukeSteps) {
+                currentLukeStep++;
+                updateLukeStepView();
+            }
+        }
+
+        function prevLukeStep() {
+            if (currentLukeStep > 1) {
+                currentLukeStep--;
+                updateLukeStepView();
+            }
+        }
+
+        function submitLukeBooking(type) {
+            const nameEl = document.getElementById('lukeCustName');
+            const phoneEl = document.getElementById('lukeCustPhone');
+            const dateEl = document.getElementById('lukeCustDate');
+            const notesEl = document.getElementById('lukeCustNotes');
+
+            const name = nameEl ? nameEl.value.trim() : '';
+            const phone = phoneEl ? phoneEl.value.trim() : '';
+            const date = dateEl ? dateEl.value : '';
+            const notes = notesEl ? notesEl.value.trim() : '';
+
+            if (!name || !phone || !date) {
+                alert('Please complete required fields: Name, Phone, and Event Date.');
+                return;
+            }
+
+            const l = document.getElementById('lukeDimL') ? document.getElementById('lukeDimL').value : '35';
+            const w = document.getElementById('lukeDimW') ? document.getElementById('lukeDimW').value : '30';
+            const h = document.getElementById('lukeDimH') ? document.getElementById('lukeDimH').value : '14';
+
+            const bookingData = {
+                name,
+                phone,
+                date,
+                notes,
+                celebrationType: `LUKE LUX - ${lukeFormData.celebrationType}`,
+                venue: `${lukeFormData.venueSetting} (${l}'x${w}'x${h}')`,
+                furniture: lukeFormData.furniture.join(', ') || 'Standard VIP',
+                theme: lukeFormData.selectedTheme || 'Royal Gold Velvet Arch',
+                pops: lukeFormData.popsFX.join(', ') || 'None',
+                mealPref: lukeFormData.mealPref,
+                dining: lukeFormData.selectedDining.join(', ') || 'None',
+                sweets: lukeFormData.sweets.join(', ') || 'None',
+                fragrance: lukeFormData.fragrance,
+                lighting: lukeFormData.selectedLighting.join(', ') || 'None'
+            };
+
+            saveToQueue(bookingData);
+
+            const message = `*NEW LUKE LUX VIP BOOKING - CLEB DECOR*\n\n` +
+                `*Name:* ${bookingData.name}\n` +
+                `*Phone:* ${bookingData.phone}\n` +
+                `*Date:* ${bookingData.date}\n` +
+                `*Type:* ${bookingData.celebrationType}\n` +
+                `*Venue:* ${bookingData.venue}\n` +
+                `*Furniture:* ${bookingData.furniture}\n` +
+                `*Theme:* ${bookingData.theme}\n` +
+                `*Party Pops & FX:* ${bookingData.pops}\n` +
+                `*Meal Preference:* ${bookingData.mealPref}\n` +
+                `*Dining Options:* ${bookingData.dining}\n` +
+                `*Chocolates & Sweets:* ${bookingData.sweets}\n` +
+                `*Fragrance:* ${bookingData.fragrance}\n` +
+                `*Lighting & FX:* ${bookingData.lighting}\n` +
+                `*Notes:* ${bookingData.notes || 'N/A'}`;
+
+            if (type === 'whatsapp') {
+                window.open(`https://wa.me/919934936488?text=${encodeURIComponent(message)}`, '_blank');
+            } else {
+                window.location.href = `mailto:aman.official.9934@gmail.com?subject=LUKE LUX Booking Request - ${encodeURIComponent(name)}&body=${encodeURIComponent(message)}`;
+            }
+        }
+
+        /* Customer Verification for Reviews */
+        function verifyCustomer() {
+            const phoneInput = document.getElementById('verifyPhone');
+            const verifyMsg = document.getElementById('verifyMsg');
+            const phone = phoneInput ? phoneInput.value.trim() : '';
+
+            if (!phone) {
+                showVerificationMsg('Please enter your registered phone number.');
+                return;
+            }
+
+            const cleanInputPhone = phone.replace(/\D/g, '');
+
+            // Check pre-verified numbers first
+            const isPreVerified = preVerifiedNumbers.some(num => cleanInputPhone.includes(num));
+
+            // Retrieve booked requests stored locally
+            const bookings = JSON.parse(localStorage.getItem('cleb_queue') || '[]');
+            const registeredUser = JSON.parse(localStorage.getItem('cleb_registered_users') || '[]');
+            
+            const foundBooking = bookings.find(b => b.phone.replace(/\D/g, '').includes(cleanInputPhone)) ||
+                                 registeredUser.find(u => u.phone.replace(/\D/g, '').includes(cleanInputPhone));
+
+            if (isPreVerified || foundBooking) {
+                const customerName = foundBooking ? foundBooking.name : (cleanInputPhone.includes('9508610614') ? 'VIP Customer' : 'Aman Rajput');
+                verifiedCustomerData = {
+                    name: customerName,
+                    phone: phone
+                };
+                document.getElementById('verifiedCustName').innerText = verifiedCustomerData.name;
+                document.getElementById('reviewVerificationBox').style.display = 'none';
+                document.getElementById('reviewFormBox').style.display = 'block';
+            } else {
+                showVerificationMsg('Only verified customers can leave a review. Please enter the phone number used during booking or register/book first.');
+            }
+        }
+
+        function showVerificationMsg(msg) {
+            const el = document.getElementById('verifyMsg');
+            if (!el) return;
+            el.innerText = msg;
+            el.style.display = 'block';
+        }
+
+        function triggerFileInput() {
+            const input = document.getElementById('imageInput');
+            if (input) input.click();
+        }
+
+        function switchSection(sectionId) {
+            document.querySelectorAll('.menu-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.section-view').forEach(sec => sec.classList.remove('active'));
+
+            if (sectionId === 'home') {
+                document.getElementById('menuHome').classList.add('active');
+                document.getElementById('sectionHome').classList.add('active');
+            } else if (sectionId === 'luke') {
+                document.getElementById('menuLuke').classList.add('active');
+                document.getElementById('sectionLuke').classList.add('active');
+            } else if (sectionId === 'review') {
+                document.getElementById('menuReview').classList.add('active');
+                document.getElementById('sectionReview').classList.add('active');
+            } else if (sectionId === 'about') {
+                document.getElementById('menuAbout').classList.add('active');
+                document.getElementById('sectionAbout').classList.add('active');
+            }
         }
 
         function selectOption(element, field, value) {
@@ -745,6 +1501,7 @@
             const progressFill = document.getElementById('progressFill');
             const backBtn = document.getElementById('backBtn');
             const nextBtn = document.getElementById('nextBtn');
+            const bottomNav = document.getElementById('homeBottomNav');
 
             if (stepLabel) stepLabel.innerText = `Step ${currentStep}: ${stepTitles[currentStep - 1]}`;
             if (stepNumber) stepNumber.innerText = `${currentStep} / ${totalSteps}`;
@@ -758,6 +1515,9 @@
                     nextBtn.style.display = 'block';
                     nextBtn.innerText = 'Next ›';
                 }
+            }
+            if (bottomNav) {
+                bottomNav.style.display = 'flex';
             }
         }
 
@@ -775,37 +1535,137 @@
             }
         }
 
-        function saveToQueue(booking) {
-            const queue = JSON.parse(localStorage.getItem('cleb_queue') || '[]');
-            queue.unshift(booking);
-            localStorage.setItem('cleb_queue', JSON.stringify(queue));
-            renderQueue();
+        /* Review Section Image Drag & Drop & Upload Handling */
+        function initDragAndDrop() {
+            const dropzone = document.getElementById('dropzone');
+            if (!dropzone) return;
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropzone.addEventListener(eventName, (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    dropzone.classList.add('dragover');
+                }, false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropzone.addEventListener(eventName, (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    dropzone.classList.remove('dragover');
+                }, false);
+            });
+
+            dropzone.addEventListener('drop', (e) => {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                processFiles(files);
+            }, false);
         }
 
-        function renderQueue() {
-            const queue = JSON.parse(localStorage.getItem('cleb_queue') || '[]');
-            const container = document.getElementById('queueList');
-            if (!container) return;
+        function handleFileSelect(event) {
+            const files = event.target.files;
+            processFiles(files);
+        }
 
-            if (queue.length === 0) {
-                container.innerHTML = 'No requests submitted yet.';
-                return;
-            }
+        function processFiles(files) {
+            if (!files || files.length === 0) return;
+            Array.from(files).forEach(file => {
+                if (!file.type.startsWith('image/')) return;
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    uploadedImages.push(e.target.result);
+                    renderPreviews();
+                };
+                reader.readAsDataURL(file);
+            });
+        }
 
-            container.innerHTML = queue.map(item => `
-                <div class="queue-card">
-                    <div class="queue-card-title">${item.celebrationType} - ${item.name}</div>
-                    <div>📅 Date: ${item.date}</div>
-                    <div>📱 Phone: ${item.phone}</div>
-                    <div>🎨 Theme: ${item.theme}</div>
-                    <div style="font-size:10px; color: var(--text-muted); margin-top:4px;">Submitted: ${item.submittedAt}</div>
+        function removeImage(index) {
+            uploadedImages.splice(index, 1);
+            renderPreviews();
+        }
+
+        function renderPreviews() {
+            const grid = document.getElementById('previewGrid');
+            if (!grid) return;
+            grid.innerHTML = uploadedImages.map((src, idx) => `
+                <div class="preview-card">
+                    <img src="${src}" alt="Preview ${idx + 1}">
+                    <button class="preview-remove" onclick="event.stopPropagation(); removeImage(${idx})">✕</button>
                 </div>
             `).join('');
         }
 
-        function toggleQueue() {
-            const modal = document.getElementById('queueModal');
-            if (modal) modal.classList.toggle('active');
+        function submitReview() {
+            const textEl = document.getElementById('revText');
+            const text = textEl ? textEl.value.trim() : '';
+
+            if (!text) {
+                showToast('Please enter your review text.');
+                return;
+            }
+
+            const newReview = {
+                name: verifiedCustomerData ? verifiedCustomerData.name : 'Verified Customer',
+                text: text,
+                images: [...uploadedImages]
+            };
+
+            const storedReviews = JSON.parse(localStorage.getItem('cleb_reviews') || '[]');
+            storedReviews.unshift(newReview);
+            localStorage.setItem('cleb_reviews', JSON.stringify(storedReviews));
+
+            // Reset form fields
+            if (textEl) textEl.value = '';
+            uploadedImages = [];
+            renderPreviews();
+
+            renderReviews();
+            showToast('✨ Thank you! Your review and photos have been submitted.');
+        }
+
+        function renderReviews() {
+            const container = document.getElementById('reviewsContainer');
+            if (!container) return;
+
+            const stored = JSON.parse(localStorage.getItem('cleb_reviews') || '[]');
+            const allReviews = [...stored, ...defaultReviews];
+
+            container.innerHTML = allReviews.map(rev => `
+                <div class="review-card-item">
+                    <div class="review-author">👤 ${rev.name} <span style="font-size:10px; color:var(--success); font-weight:normal;">(Verified Customer)</span></div>
+                    <div class="review-text">"${rev.text}"</div>
+                    ${rev.images && rev.images.length > 0 ? `
+                        <div class="review-images-row">
+                            ${rev.images.map(imgSrc => `<img src="${imgSrc}" class="review-img-thumb" alt="Customer Photo" onclick="window.open('${imgSrc}')">`).join('')}
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('');
+        }
+
+        function saveToQueue(bookingData) {
+            const queue = JSON.parse(localStorage.getItem('cleb_queue') || '[]');
+            queue.unshift(bookingData);
+            localStorage.setItem('cleb_queue', JSON.stringify(queue));
+
+            // Register user phone automatically for review verification
+            const registeredUsers = JSON.parse(localStorage.getItem('cleb_registered_users') || '[]');
+            if (!registeredUsers.some(u => u.phone === bookingData.phone)) {
+                registeredUsers.push({ name: bookingData.name, phone: bookingData.phone });
+                localStorage.setItem('cleb_registered_users', JSON.stringify(registeredUsers));
+            }
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('reviewToast');
+            if (!toast) return;
+            toast.innerText = msg;
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3500);
         }
 
         function submitBooking(type) {
@@ -842,10 +1702,10 @@
                 theme: formData.selectedTheme || 'None',
                 props: formData.selectedProps.join(', ') || 'None',
                 dining: formData.selectedDining.join(', ') || 'None',
-                lighting: formData.selectedLighting.join(', ') || 'None',
-                submittedAt: new Date().toLocaleString()
+                lighting: formData.selectedLighting.join(', ') || 'None'
             };
 
+            // Save booking so phone number is verified for future reviews
             saveToQueue(bookingData);
 
             const message = `*NEW BOOKING REQUEST - CLEB DECOR*\n\n` +
@@ -863,21 +1723,37 @@
             if (type === 'whatsapp') {
                 window.open(`https://wa.me/919934936488?text=${encodeURIComponent(message)}`, '_blank');
             } else {
-                window.location.href = `mailto:info@clebdecor.com?subject=Booking Request - ${encodeURIComponent(name)}&body=${encodeURIComponent(message)}`;
+                window.location.href = `mailto:aman.official.9934@gmail.com?subject=Booking Request - ${encodeURIComponent(name)}&body=${encodeURIComponent(message)}`;
             }
         }
 
-        // Expose all interactive functions globally
+        // Expose functions globally for dynamic inline event handlers
+        window.switchSection = switchSection;
         window.selectOption = selectOption;
         window.setVenue = setVenue;
         window.selectTheme = selectTheme;
         window.toggleSelection = toggleSelection;
         window.nextStep = nextStep;
         window.prevStep = prevStep;
+        window.selectLukeOption = selectLukeOption;
+        window.setLukeVenue = setLukeVenue;
+        window.selectLukeMeal = selectLukeMeal;
+        window.selectLukeFragrance = selectLukeFragrance;
+        window.toggleLukeFurniture = toggleLukeFurniture;
+        window.selectLukeTheme = selectLukeTheme;
+        window.toggleLukeSelection = toggleLukeSelection;
+        window.nextLukeStep = nextLukeStep;
+        window.prevLukeStep = prevLukeStep;
+        window.submitLukeBooking = submitLukeBooking;
+        window.triggerFileInput = triggerFileInput;
+        window.handleFileSelect = handleFileSelect;
+        window.removeImage = removeImage;
+        window.verifyCustomer = verifyCustomer;
+        window.submitReview = submitReview;
         window.submitBooking = submitBooking;
-        window.toggleQueue = toggleQueue;
 
         window.onload = init;
     </script>
 </body>
 </html>
+```
