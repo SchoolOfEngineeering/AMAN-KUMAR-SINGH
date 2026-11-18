@@ -711,7 +711,7 @@
         </div>
         <!-- Embedded Options Menu -->
         <div class="embedded-menu">
-            <button class="menu-tab active" id="menuHome" onclick="switchSection('home')">1. Home</button>
+            <button class="menu-tab active" id="menuHome" onclick="switchSection('home')">1. CELEBRATION</button>
             <button class="menu-tab" id="menuLuke" onclick="switchSection('luke')">2. LUKE LUX</button>
             <button class="menu-tab" id="menuReview" onclick="switchSection('review')">3. Review</button>
             <button class="menu-tab" id="menuAbout" onclick="switchSection('about')">4. About</button>
@@ -723,7 +723,7 @@
         <div class="progress-section">
             <div class="step-info">
                 <span id="stepLabel">Step 1: Celebration Type</span>
-                <span id="stepNumber">1 / 7</span>
+                <span id="stepNumber">1 / 6</span>
             </div>
             <div class="progress-bar-bg">
                 <div class="progress-bar-fill" id="progressFill"></div>
@@ -741,6 +741,10 @@
                     <div class="option-btn active" onclick="selectOption(this, 'celebrationType', 'Birthday')">🎂 Birthday Party</div>
                     <div class="option-btn" onclick="selectOption(this, 'celebrationType', 'Anniversary')">💍 Anniversary</div>
                     <div class="option-btn" onclick="selectOption(this, 'celebrationType', 'BabyShower')">🍼 Baby Shower</div>
+                    <div class="option-btn" onclick="selectOption(this, 'celebrationType', 'Joke')">😄 Joke</div>
+                    <div class="option-btn" onclick="selectOption(this, 'celebrationType', 'Love')">❤️ Love</div>
+                    <div class="option-btn" onclick="selectOption(this, 'celebrationType', 'Pooja')">🪔 Pooja</div>
+                    <div class="option-btn" onclick="selectOption(this, 'celebrationType', 'New Opening')">🎊 New Opening</div>
                     <div class="option-btn" onclick="selectOption(this, 'celebrationType', 'Other')">🎉 Other Event</div>
                 </div>
             </div>
@@ -795,15 +799,6 @@
 
             <!-- STEP 6 -->
             <div class="step-panel" id="step6">
-                <div class="step-header">
-                    <h2>Lighting & Toys</h2>
-                    <p>Brighten up the party atmosphere</p>
-                </div>
-                <div class="checkbox-grid" id="lightingGrid"></div>
-            </div>
-
-            <!-- STEP 7 -->
-            <div class="step-panel" id="step7">
                 <div class="step-header">
                     <h2>Confirm Booking</h2>
                     <p>Enter your details to finalize your request</p>
@@ -1059,7 +1054,7 @@
         };
 
         let currentStep = 1;
-        const totalSteps = 7;
+        const totalSteps = 6;
 
         let currentLukeStep = 1;
         const totalLukeSteps = 8;
@@ -1127,16 +1122,20 @@ const themesData = [
 
         const propsData = [
             { id: "prop1", name: "Smoke Machine", icon: "💨" },
-            { id: "prop2", name: "Photo Booth Props", icon: "📸" },
-            { id: "prop3", name: "Balloon Arch", icon: "🎈" },
-            { id: "prop4", name: "Party Popper Cannon", icon: "🎉" }
+            { id: "prop3", name: "Multiple Balloon Arch", icon: "🎈" },
+            { id: "prop4", name: "Party Popper Cannon", icon: "🎉" },
+            { id: "prop5", name: "Snow Spray", icon: "❄️" }
         ];
 
         const diningData = [
             { id: "din1", name: "Custom Cake Design", icon: "🎂" },
-            { id: "din2", name: "Cutlery & Plates Set", icon: "🍽️" },
+            { id: "din2", name: "Disposable Cutlery & Plates", icon: "🍽️" },
             { id: "din3", name: "Cupcake Tower", icon: "🧁" },
-            { id: "din4", name: "Beverage Dispenser", icon: "🍹" }
+            { id: "din4", name: "Disposable Beverage Dispenser", icon: "🥤" },
+            { id: "din5", name: "Cold Drink", icon: "🥤" },
+            { id: "din6", name: "Packaged Water", icon: "💧" },
+            { id: "din7", name: "Extra Tissue", icon: "🧻" },
+            { id: "din8", name: "Fragrance Candle", icon: "🕯️" }
         ];
 
         const lightingData = [
@@ -1152,7 +1151,6 @@ const themesData = [
             "Theme Selection",
             "Entertainment & Props",
             "Dining & Cake",
-            "Lighting & Toys",
             "Confirm Booking"
         ];
 
@@ -1508,22 +1506,6 @@ const themesData = [
                 });
             }
 
-            const nextButton = document.getElementById('nextBtn');
-            const backButton = document.getElementById('backBtn');
-            if (nextButton && !nextButton.dataset.navigationBound) {
-                nextButton.dataset.navigationBound = 'true';
-                nextButton.addEventListener('click', (event) => {
-                    event.preventDefault();
-                    nextStep();
-                });
-            }
-            if (backButton && !backButton.dataset.navigationBound) {
-                backButton.dataset.navigationBound = 'true';
-                backButton.addEventListener('click', (event) => {
-                    event.preventDefault();
-                    prevStep();
-                });
-            }
         }
 
         function renderThemes() {
